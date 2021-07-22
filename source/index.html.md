@@ -238,7 +238,7 @@ curl "https://api.sigmaratings.com/v1/risk?q=YARDPOINT%20SALES%20LLP"
 }
 ```
 
-The Risk Scoring endpoint returns a Sigma Risk score for the given search term. The Sigma Risk score range is from: 0 - 100.
+The Risk Scoring endpoint returns a Sigma Risk score for the given search term. 
 
 The Sigma Risk score is calculated using the following criteria:
 
@@ -248,6 +248,9 @@ The Sigma Risk score is calculated using the following criteria:
   1. A ceiling is applied for each category of indicator, regardless of how many indicators are returned. Example: For 100s of Adverse Media articles, the score can only grow by 10 points for that indicator category.
 1. The final risk score is computed as taking the maximum value across all indicator scores (with ‘Age Discounting’ applied) and then adjusting upward using the composite of Risk Indicators using `Dynamic Capping`.
 
+The Sigma Risk score range is from: 0 - 100. 
+
+<aside class="notice">
 These are some examples of how the `Dynamic Capping` is applied:
 
 Search term: “Company XYZ” 
@@ -257,6 +260,7 @@ Final Score = 100
 Search term: “Company ABC”
 Indicators [Score]: Adverse Media [50] x 15, Leadership [30]
 Final Score = 52.141
+</aside>
 
 The Sigma Risk Level is determined based on the Sigma Risk Score, the higher the risk, the more severe the assigned level will be. 
 
@@ -264,9 +268,9 @@ Risk Level for each Score range:
 
 | Level | Score |
 | ----------- | ---------- |
-| Elevated | 70 < 100 |
-| Standard | 10 < 70 | 
-| Neutral | 0 < 10|
+| Elevated | 70 < Score <= 100 |
+| Standard | 10 < Score <= 70 | 
+| Neutral | 0 <= Score <= 10|
 
 
 ### HTTP Request
