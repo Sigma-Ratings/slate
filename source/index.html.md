@@ -251,15 +251,19 @@ The Sigma Risk score is calculated using the following criteria:
 The Sigma Risk score range is from: 0 - 100. 
 
 <aside class="notice">
-These are some examples of how the `Dynamic Capping` is applied:
+These are some examples of how the <i>Dynamic Capping</i> is applied: <br />
 
-Search term: “Company XYZ” 
-Indicators [Score]: Sanctions [100], Adverse Media [50] x 3, Enforcement Action [70]
-Final Score = 100 
+<ul>
+<li>Search term: “Company XYZ” </li>
+<li>Indicators [Score]: Sanctions [100], Adverse Media [50] x 3, Enforcement Action [70] </li>
+<li>Final Score = 100 </li>
+<ul>
 
-Search term: “Company ABC”
-Indicators [Score]: Adverse Media [50] x 15, Leadership [30]
-Final Score = 52.141
+<ul>
+<li>Search term: “Company ABC”</li>
+<li>Indicators [Score]: Adverse Media [50] x 15, Leadership [30]</li>
+<li>Final Score = 52.141</li>
+</ul>
 </aside>
 
 The Sigma Risk Level is determined based on the Sigma Risk Score, the higher the risk, the more severe the assigned level will be. 
