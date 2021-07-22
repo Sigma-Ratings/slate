@@ -238,19 +238,27 @@ curl "https://api.sigmaratings.com/v1/risk?q=YARDPOINT%20SALES%20LLP"
 }
 ```
 
-The risk scoring endpoint with an entity name returns a Sigma Risk Score for that search term.  
+The Risk Scoring endpoint returns a Sigma Risk score for the given search term. The Sigma Risk score range is from: 0 - 100.
 
-Sigma's risk model aggregates individual risk indicator scores for particular categories across all the matches for a given threshold. 
-
-The risk score for an entity is calculated using the following criteria:
+The Sigma Risk score is calculated using the following criteria:
 
 1. Each Risk Indicator not related to Sanctions and PEPs is applied an ‘Age Discounting’ rate, this rate reduces 10 points per year based on when the event happened. 
 1. A [squashing/sigmoid function](https://en.wikipedia.org/wiki/Sigmoid_function) is applied to create a boundary for the following two cases:
   1. Based on the indicator category, multiple results of a given Indicator score accumulate at a different rate. For example: 3 PEP results at 50 points accumulate to 54.7 where 3 Adverse Media hits at 40 point accumulate to 40.1 points.
   1. A ceiling is applied for each category of indicator, regardless of how many indicators are returned. Example: For 100s of Adverse Media articles, the score can only grow by 10 points for that indicator category.
-1. The final risk score is computed as taking the maximum value across all indicator scores (with ‘Age Discounting’ applied) and then adjusting upward using the composite of Risk Indicators using ‘Dynamic Capping’.
+1. The final risk score is computed as taking the maximum value across all indicator scores (with ‘Age Discounting’ applied) and then adjusting upward using the composite of Risk Indicators using `Dynamic Capping`.
 
-A Sigma Risk Level is determined based on the Sigma Risk Score, the higher the risk, the more severe the assigned level will be. 
+These are some examples of how the `Dynamic Capping` is applied:
+
+Search term: “Company XYZ” 
+Indicators [Score]: Sanctions [100], Adverse Media [50] x 3, Enforcement Action [70]
+Final Score = 100 
+
+Search term: “Company ABC”
+Indicators [Score]: Adverse Media [50] x 15, Leadership [30]
+Final Score = 52.141
+
+The Sigma Risk Level is determined based on the Sigma Risk Score, the higher the risk, the more severe the assigned level will be. 
 
 Risk Level for each Score range: 
 
