@@ -238,34 +238,17 @@ curl "https://api.sigmaratings.com/v1/risk?q=YARDPOINT%20SALES%20LLP"
 }
 ```
 
-Sigma's Risk Scoring powers compliant commercial and financial relationships globally.  It brings together over 60 proprietary financial crime-related risk indicators to derive entity risk scores from Sigma's database, which now includes 750 million companies, people and other legal entities. Calling the endpoint with an entity name returns a Sigma Risk Score for the specified entity.
+The risk scoring endpoint with an entity name returns a Sigma Risk Score for that search term.  
 
-A Sigma Risk Score for an entity is calculated using different available data points, these data points can be summarized as:
+Sigma's risk model aggregates individual risk indicator scores for particular categories across all the matches for a given threshold. 
 
-1. Determining the highest risk indicator for each category.
-1. Aggregating the individual risk indicator scores for all categories.
-1. Computing the final score by adding the highest risk indicator to the previously aggregated scores.
+The risk score for an entity is calculated using the following criteria:
 
-The final Sigma Risk Score range is from 0-100.
-
-Individual Risk Indicator scores have a minimum possible and maximum possible range, these ranges are listed below:
-
-Category | Minimum Score | Maximum Score
-| --------- | :-----------: | :----------: |
-Sanctions | 70 | 100
-Transparency |	0 |	80
-Enforcement Action |	40 |	70
-Restricted Entity |	70 |	70
-Address |	40 |	70
-Registration Status |	0 |	70
-Jurisdiction |	40 |	60
-Adverse Media |	40 |	50
-Global Trade |	20 |	50
-PEP |	20 |	40
-Line of Business |	20 |	40 
-State Owned Entity |	20 |	20
-Leadership |	10 |	30
-
+1. Each Risk Indicator not related to Sanctions and PEPs is applied an ‘Age Discounting’ rate, this rate reduces 10 points per year based on when the event happened. 
+1. A [squashing/sigmoid function](https://en.wikipedia.org/wiki/Sigmoid_function) is applied to create a boundary for the following two cases:
+  1. Based on the indicator category, multiple results of a given Indicator score accumulate at a different rate. For example: 3 PEP results at 50 points accumulate to 54.7 where 3 Adverse Media hits at 40 point accumulate to 40.1 points.
+  1. A ceiling is applied for each category of indicator, regardless of how many indicators are returned. Example: For 100s of Adverse Media articles, the score can only grow by 10 points for that indicator category.
+1. The final risk score is computed as taking the maximum value across all indicator scores (with ‘Age Discounting’ applied) and then adjusting upward using the composite of Risk Indicators using ‘Dynamic Capping’.
 
 A Sigma Risk Level is determined based on the Sigma Risk Score, the higher the risk, the more severe the assigned level will be. 
 
