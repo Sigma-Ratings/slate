@@ -238,7 +238,7 @@ curl "https://api.sigmaratings.com/v1/risk?q=YARDPOINT%20SALES%20LLP"
 }
 ```
 
-The Risk Scoring endpoint returns a Sigma Risk score for the given search term. 
+The Risk Scoring endpoint returns a Sigma Risk score for a given search term. 
 
 The Sigma Risk score is calculated using the following criteria:
 
@@ -250,7 +250,7 @@ The Sigma Risk score is calculated using the following criteria:
 
 The Sigma Risk score range is from: 0 - 100. 
 
-These are some examples of how the <i>Dynamic Capping</i> is applied: <br />
+These are some examples of how a Risk Score is calculated: <br />
 
 **Search Term:** Acme Company
 
