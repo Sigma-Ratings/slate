@@ -253,14 +253,14 @@ The Sigma Risk score range is from: 0 - 100.
 <aside class="notice">
 These are some examples of how the <i>Dynamic Capping</i> is applied: <br />
 
+Search term: “Company XYZ” 
 <ul>
-<li>Search term: “Company XYZ” </li>
 <li>Indicators [Score]: Sanctions [100], Adverse Media [50] x 3, Enforcement Action [70] </li>
 <li>Final Score = 100 </li>
 <ul>
-
+<br />
+Search term: “Company ABC”
 <ul>
-<li>Search term: “Company ABC”</li>
 <li>Indicators [Score]: Adverse Media [50] x 15, Leadership [30]</li>
 <li>Final Score = 52.141</li>
 </ul>
