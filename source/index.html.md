@@ -297,6 +297,7 @@ Filter | Description | Type |
 `mode` | Sigma integrations filter enables configuration of which integrations are used and how the data is returned | string |
 `countries` | A list of 2 letter [ISO-2 country code](https://www.iso.org/iso-3166-country-codes.html) to limit matches. Example: `["US","BR","BE","AU"]` | []string |
 `indicators` | A string array of indicators to filter by | string
+`dob` | A string representation of a date of birth. Two date formats are accepted: 1) `YYYY-MM-DD` or 2) `YYYY` | string
 
 ### Response
 
@@ -411,6 +412,7 @@ Parameter |  Description | Type | Default
 `indicators` | A commma separated list of indicators to filter by | string | empty
 `countries` | A comma separated list of countries to filter by | string | empty
 `monitored` | A boolean value indicating whether entities should be monitored or not | boolean | false
+`dob` | A string representation of a date of birth. Two date formats are accepted: 1) `YYYY-MM-DD` or 2) `YYYY` | string
 
 ### Available modes:
 
