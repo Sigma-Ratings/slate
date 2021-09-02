@@ -120,7 +120,7 @@ curl "https://api.sigmaratings.com/v1/audit/:id"
     "results": [
       {
         "name": "YARDPOINT SALES LLP",
-        "type": "company",
+        "facet": "company",
         "strength": 0.9433497536945812,
         "source": "Corporate Registries",
         "indicators": [
@@ -153,7 +153,20 @@ curl "https://api.sigmaratings.com/v1/audit/:id"
               }
             ]
           }
-        ]
+        ],
+        "company_registry": {
+          "addresses": [
+            "175 DARKES LANE, SUITE B, 2ND FLOOR, POTTERS BAR, HERTFORDSHIRE, EN6 1BW"
+          ],
+          "founded": null,
+          "status": "Inactive",
+          "lines_of_business": [],
+          "corporate_numbers": [],
+          "ownership": [],
+          "subsidiaries": []
+        },
+        "person": null,
+        "vessel": null
       }
     ]
   },
@@ -221,11 +234,28 @@ curl "https://api.sigmaratings.com/v1/risk?q=YARDPOINT%20SALES%20LLP"
       "match_name": "Yardpoint Sales Llp",
       "source": {
         "key": "sayari",
-        "matchId": "Aphm-9QnsXBdPKg6Dx4O5Q",
-        "name": "Sayari"
+        "match_id": "Aphm-9QnsXBdPKg6Dx4O5Q",
+        "name": "Sayari",
+        "match_name": "Yardpoint Sales Llp",
+        "last_checked": "2021-09-01T21:32:57Z"
       },
       "strength": 1,
-      "type": "company"
+      "facet": "company",
+      "company_registry": {
+         "addresses": [
+          "175 DARKES LANE, SUITE B, 2ND FLOOR, POTTERS BAR, HERTFORDSHIRE, EN6 1BW"
+        ],
+        "founded": null,
+        "status": "Inactive",
+        "lines_of_business": [
+        ],
+        "corporate_numbers": [
+        ],
+        "ownership": [],
+        "subsidiaries": []
+      },
+      "person": null,
+      "vessel": null
     }
   ],
   "summary": {
@@ -344,8 +374,114 @@ Field | Description
 `description` | Description of the risk indicator and the entity name it relates to.
 `name` | Summarized description of the indicator. 
 `score` | 0-100 score to measure the relatiove risk severity of the indicator. eg. OFAC SDN sanctions are the most severe indicators, and score at 100.
-`source_urls` | Link to original source when available. When no source URL is found, additional context may be found via Sigma's Terminal.
+`sources` | An object representing a combination of source `name` and `url`. Where `name` represent the source name and `url` the URL reference to the source. When no source URL is found, additional context may be found via Sigma's Terminal.
 `urn` | Unique identifier for indicator
+`facet` | A category indicating the type of match. Possible values include: `person`, `company`, `adverse_news`, `vessel`, `undefined`. `undefined` means that Sigma did not have sufficient information to declare a facet type.
+`company_registry` | A collection of fields identified company registry information. 
+`person` | A collection of fields that represent the person in the indicator.
+`vessel` | A collection of fields that represent the vessel in the indicator.
+
+Attribute detail for `company_registry`:
+
+Field | Description
+--------- | ----------- | 
+`addresses` | A string representation of an address of the specified company.
+`founded` | Date company was founded.
+`status` | What the status of the current company is. For example: `Currently Registered`. Can be null.
+`lines_of_business` | A string array of values representing the line of business for the company.
+`corporate_numbers`| An array of corporate number objects available of the specified company. Each object has a `number` and a `register`. 
+`ownership` | An array of companies or people objects that have representational ownership of the company. Each ownership object has `type`, `name`, `shares`, `countries`.
+`subsidiaries` | An array of subsidiaries of the specified company. Each subsidiary object has `name`, `date`, and a string array of `addresses`.
+
+> The following is an example of a `company_registry` object:
+
+```json
+{
+   "company_registry": {
+     "addresses": [
+          "191 QUEEN STREET 1141"
+        ],
+        "founded": "2016-06-06T00:00:00Z",
+        "status": "Registrada",
+        "lines_of_business": [
+          "NO/NO"
+        ],
+        "corporate_numbers": [
+          {
+            "number": "440854",
+            "register": "Oficina Nacional de la Propiedad Industrial"
+          }
+        ],
+        "ownership": [],
+        "subsidiaries": []
+   }
+}
+```
+
+Attribute detail for `person`:
+
+Field | Description
+--------- | ----------- | 
+`aliases` | A string array of aliases of the specicified person.
+`nationality` | A string representation of the nationality. Can be null.
+`date_of_birth` | A UTC string representation of the date of birth.
+`name` | A string name of the specified person.
+`pep` | An integer pep level of the specified person.
+`id` | An identifier for the specified person.
+`political_positions` | An array of political positions objects of the specified person. Each political position object has: `country`, `description`, `from` and `to` dates when the political position was held.
+
+> The following is an example of a `person` object:
+
+```json
+{
+ "person": {
+        "aliases": [
+          "Daniel Gertler",
+          "Gertler Dan",
+          "דן גרטלר"
+        ],
+        "nationality": "Israeli",
+        "date_of_birth": "1973-12-23T00:00:00Z",
+        "name": "Dan  Gertler",
+        "pep": 3,
+        "id": "I2457572",
+        "political_positions": [
+          {
+            "country": "Israel",
+            "description": "Former Honorary Consul for Democratic Republic of Congo",
+            "from": "April 2003",
+            "to": null
+          }
+        ]
+      }
+}
+```
+
+Attribute detail for `vessel`:
+
+Field | Description
+--------- | ----------- | 
+`type` | A string representation of the type of vessel. E.g. General Cargo. Can be null.
+`ports_of_registry` | A string array of ports of registry of the specified vessel.
+`maritime_call_signs` | A string array of maritime call signs of the specified vessel.
+`sanctioned` | A boolean value indicating whether the vessel is sanctioned or not. Can be null.
+`imo` | A string representation of the specified vessel. Can be null.
+
+> The following is an example of a `vessel` object:
+
+```json
+{
+"vessel": {
+        "type": "RoRo ship/General cargo",
+        "portsOfRegistry": [],
+        "maritimeCallSigns": [
+          "UCJR"
+        ],
+        "sanctioned": false,
+        "imo": "8406705"
+      }
+}
+```
 
 Attribute detail for `locations`:
 
@@ -578,6 +714,10 @@ The compressed zip file is composed of three files:
           }
         ]
       },
+      "company_registry": null,
+      "person": null,
+      "vessel": null,
+      "facet": "undefined",
       "indicator_summary": {
         "Address": 2,
         "Registration Status": 1
@@ -744,7 +884,20 @@ curl "https://api.sigmaratings.com/v1/monitor/entity/:id"
               }
             ]
           }
-        ]
+        ],
+        "company_registry": {
+          "addresses": [
+            "175 DARKES LANE, SUITE B, 2ND FLOOR, POTTERS BAR, HERTFORDSHIRE, EN6 1BW"
+          ],
+          "founded": null,
+          "status": "Inactive",
+          "lines_of_business": [],
+          "corporate_numbers": [],
+          "ownership": [],
+          "subsidiaries": []
+        },
+        "person": null,
+        "vessel": null
       }
     ]
   },
@@ -958,5 +1111,5 @@ Field | Description
 `score` | Risk score of the field that was modified.
 `category` | One of [available categories](#available-indicators) for the field that was modified.
 `description` | Description of the field that was modified.
-`source_urls` | Source url of field that was modified if present.
+`sources` | An object representing a combination of source `name` and `url`. Where `name` represent the source name and `url` the URL reference to the source. When no source URL is found, additional context may be found via Sigma's Terminal.
 
