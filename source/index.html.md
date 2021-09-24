@@ -199,7 +199,7 @@ Each request from the [risk](#risk-scoring) endpoint generates and `audit_id` fi
 
 ```shell
 curl "https://api.sigmaratings.com/v1/risk?q=YARDPOINT%20SALES%20LLP"
-  -H "Authorization: c2lnbWFyYXRpbmdz" -d '{"filters":{"threshold":0.98, "mode":"sigma"}}'
+  -H "Authorization: c2lnbWFyYXRpbmdz" -d '{"filters":{"threshold":0.98, "sources":["sayari"]}}'
 ```
 
 > The above command returns JSON structured like this:
