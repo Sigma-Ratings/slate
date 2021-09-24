@@ -335,43 +335,14 @@ Filter | Description | Type |
 The `mode` filter has been deprecated and should be replaced by the `sources` filter.
 </aside>
 
-Source | Category
--------| ---------
-`opencorporates` | Corporate Registry
-`companieshouse_internal` | Corporate Registry
-`acuris_business` | Screening (Sanctions, PEPs, etc)
-`finra` | Financial, Banking & Trade Data
-`fincen_special_measures` | Screening (Sanctions, PEPs, etc)
-`occrp_icij` | Adverse Media
-`un_sustainable_banks` | Internet Presence
-`bankseu` | Financial, Banking & Trade Data
-`fsr` | Financial, Banking & Trade Data
-`giin` | Internet Presence
-`sayari` | Corporate Registry
-`sayari_sanctions` | Screening (Sanctions, PEPs, etc)
-`austrac_enforcements` | Screening (Sanctions, PEPs, etc)
-`fca_enforcements` | Screening (Sanctions, PEPs, etc)
-`icij_leaks` | Screening (Sanctions, PEPs, etc)
-`marijuana_index` | Screening (Sanctions, PEPs, etc)
-`nse` | Financial, Banking & Trade Data
-`swift` | Financial, Banking & Trade Data
-`csl_entities` | Screening (Sanctions, PEPs, etc)
-`wikipedia_soes` | Screening (Sanctions, PEPs, etc)
-`mas_enforcements` | Screening (Sanctions, PEPs, etc)
-`ofac_sdn_list` | Screening (Sanctions, PEPs, etc)
-`fcpa_enforcements` | Screening (Sanctions, PEPs, etc)
-`fincen_enforcements` | Screening (Sanctions, PEPs, etc) 
-`lei` | Screening (Sanctions, PEPs, etc) 
-`sfc_enforcements` | Screening (Sanctions, PEPs, etc) 
-`adv` | Financial, Banking & Trade Data
-`fincen_advisories` |  Screening (Sanctions, PEPs, etc) 
-`ofac_enforcements` |  Screening (Sanctions, PEPs, etc) 
-`panjiva` | Financial, Banking & Trade Data
-`acuris_people` | Screening (Sanctions, PEPs, etc) 
-`ofac_people` | Screening (Sanctions, PEPs, etc) 
-`sentinel_companies` | Various
-
-
+Category | Sources
+---------| --------
+Corporate Registry | `opencorporates`, `companieshouse_internal`, `sayari`
+Screening (Sanction, PEPs, etc) | `acuris_business`, `fincen_special_measures`, `sayari_sanctions`, `austrac_enforcements`, `fca_enforcements`, `icij_leaks`, `marijuana_index`, `csl_entities`, `wikipedia_soes`, `mas_enforcements`, `ofac_sdn_list`, `fcpa_enforcements`, `lei`, `sfc_enforcements`, `fincen_advisories`, `ofac_enforcements`, `acuris_people`, `ofac_people`
+Financial, Banking & Trade Data | `finra`, `bankseu`, `fsr`, `nse`, `swift`, `adv`, `panjiva`
+Adverse Media | `occrp_icij`, 
+Internet Presence | `un_sustainable_banks`, `giin`
+Various | `sentinel_companies`
 
 
 ### Response
@@ -601,41 +572,14 @@ The `mode` filter has been deprecated and should be replaced by the `sources` fi
 
 ### Available sources:
 
-Source | Category
--------| ---------
-`opencorporates` | Corporate Registry
-`companieshouse_internal` | Corporate Registry
-`acuris_business` | Screening (Sanctions, PEPs, etc)
-`finra` | Financial, Banking & Trade Data
-`fincen_special_measures` | Screening (Sanctions, PEPs, etc)
-`occrp_icij` | Adverse Media
-`un_sustainable_banks` | Internet Presence
-`bankseu` | Financial, Banking & Trade Data
-`fsr` | Financial, Banking & Trade Data
-`giin` | Internet Presence
-`sayari` | Corporate Registry
-`sayari_sanctions` | Screening (Sanctions, PEPs, etc)
-`austrac_enforcements` | Screening (Sanctions, PEPs, etc)
-`fca_enforcements` | Screening (Sanctions, PEPs, etc)
-`icij_leaks` | Screening (Sanctions, PEPs, etc)
-`marijuana_index` | Screening (Sanctions, PEPs, etc)
-`nse` | Financial, Banking & Trade Data
-`swift` | Financial, Banking & Trade Data
-`csl_entities` | Screening (Sanctions, PEPs, etc)
-`wikipedia_soes` | Screening (Sanctions, PEPs, etc)
-`mas_enforcements` | Screening (Sanctions, PEPs, etc)
-`ofac_sdn_list` | Screening (Sanctions, PEPs, etc)
-`fcpa_enforcements` | Screening (Sanctions, PEPs, etc)
-`fincen_enforcements` | Screening (Sanctions, PEPs, etc) 
-`lei` | Screening (Sanctions, PEPs, etc) 
-`sfc_enforcements` | Screening (Sanctions, PEPs, etc) 
-`adv` | Financial, Banking & Trade Data
-`fincen_advisories` |  Screening (Sanctions, PEPs, etc) 
-`ofac_enforcements` |  Screening (Sanctions, PEPs, etc) 
-`panjiva` | Financial, Banking & Trade Data
-`acuris_people` | Screening (Sanctions, PEPs, etc) 
-`ofac_people` | Screening (Sanctions, PEPs, etc) 
-`sentinel_companies` | Various
+Category | Sources
+---------| --------
+Corporate Registry | `opencorporates`, `companieshouse_internal`, `sayari`
+Screening (Sanction, PEPs, etc) | `acuris_business`, `fincen_special_measures`, `sayari_sanctions`, `austrac_enforcements`, `fca_enforcements`, `icij_leaks`, `marijuana_index`, `csl_entities`, `wikipedia_soes`, `mas_enforcements`, `ofac_sdn_list`, `fcpa_enforcements`, `lei`, `sfc_enforcements`, `fincen_advisories`, `ofac_enforcements`, `acuris_people`, `ofac_people`
+Financial, Banking & Trade Data | `finra`, `bankseu`, `fsr`, `nse`, `swift`, `adv`, `panjiva`
+Adverse Media | `occrp_icij`, 
+Internet Presence | `un_sustainable_banks`, `giin`
+Various | `sentinel_companies`
 
 ### *DEPRECATED* Available modes:
 
