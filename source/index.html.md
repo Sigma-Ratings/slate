@@ -199,7 +199,7 @@ Each request from the [risk](#risk-scoring) endpoint generates and `audit_id` fi
 
 ```shell
 curl "https://api.sigmaratings.com/v1/risk?q=YARDPOINT%20SALES%20LLP"
-  -H "Authorization: c2lnbWFyYXRpbmdz" -d '{"filters":{"threshold":0.98, "mode":"sigma"}}'
+  -H "Authorization: c2lnbWFyYXRpbmdz" -d '{"filters":{"threshold":0.98, "sources":["sayari"]}}'
 ```
 
 > The above command returns JSON structured like this:
@@ -324,10 +324,26 @@ _**filters**_ can be:
 Filter | Description | Type | 
 -------| ----------- | ----- | 
 `threshold` | A decimal representation of match strength. See below for details on the `strength` attribute | float | 
-`mode` | Sigma integrations filter enables configuration of which integrations are used and how the data is returned | string |
+`mode` | *DEPRECATED* Sigma integrations filter enables configuration of which integrations are used and how the data is returned | string |
 `countries` | A list of 2 letter [ISO-2 country code](https://www.iso.org/iso-3166-country-codes.html) to limit matches. Example: `["US","BR","BE","AU"]` | []string |
 `indicators` | A string array of indicators to filter by | string
 `dob` | A string representation of a date of birth. Two date formats are accepted: 1) `YYYY-MM-DD` or 2) `YYYY` | string
+`entity_type` | A string representation of the type of entity. Available values: `person`, `company`, `vessel`, `adverse_news` | string
+`sources` | A string array of sources. See _Available sources_ below. | string
+
+<aside class="notice">
+The `mode` filter has been deprecated and should be replaced by the `sources` filter.
+</aside>
+
+Category | Sources
+---------| --------
+Corporate Registry | `opencorporates`, `companieshouse_internal`, `sayari`
+Screening (Sanction, PEPs, etc) | `acuris_business`, `fincen_special_measures`, `sayari_sanctions`, `austrac_enforcements`, `fca_enforcements`, `icij_leaks`, `marijuana_index`, `csl_entities`, `wikipedia_soes`, `mas_enforcements`, `ofac_sdn_list`, `fcpa_enforcements`, `lei`, `sfc_enforcements`, `fincen_advisories`, `ofac_enforcements`, `acuris_people`, `ofac_people`
+Financial, Banking & Trade Data | `finra`, `bankseu`, `fsr`, `nse`, `swift`, `adv`, `panjiva`
+Adverse Media | `occrp_icij`, 
+Internet Presence | `un_sustainable_banks`, `giin`
+Various | `sentinel_companies`
+
 
 ### Response
 
@@ -506,8 +522,8 @@ Type | Description
 ## Bulk Risk Scoring
 ```shell
 cat entities.json
-{"id":"1", "name":"YARDPOINT SALES LLP"}
-{"id":"2", "name":"Sigma Ratings"}
+{"id":"1", "name":"YARDPOINT SALES LLP", "dob":"", "countries":[]}
+{"id":"2", "name":"Sigma Ratings", "dob":"", "countries":[]}
 
 curl "https://api.sigmaratings.com/v1/bulk"
   -H "Authorization: mZGVtbzpwQDU1dzByZA==" -H "Content-Type: application/x-ndjson"
@@ -544,13 +560,28 @@ For more information about the ndjson specification, please refer to: <a href='h
 Parameter |  Description | Type | Default
 --------- |  ----------- | ------- | ----------
 `threshold` | A decimal representation of match strength | float | 0.95
-`mode` | Sigma integrations filter enables configuration of which integrations are used and how the data is returned | string | basic
+`mode` | *DEPRECATED* Sigma integrations filter enables configuration of which integrations are used and how the data is returned | string | basic
 `indicators` | A commma separated list of indicators to filter by | string | empty
-`countries` | A comma separated list of countries to filter by | string | empty
 `monitored` | A boolean value indicating whether entities should be monitored or not | boolean | false
-`dob` | A string representation of a date of birth. Two date formats are accepted: 1) `YYYY-MM-DD` or 2) `YYYY` | string
+`entity_type` | A string representation of the type of entity. Available values: `person`, `company`, `vessel`, `adverse_news` | string
+`sources` | A string array of sources. See _Available sources_ below. | string
 
-### Available modes:
+<aside class="notice">
+The `mode` filter has been deprecated and should be replaced by the `sources` filter.
+</aside>
+
+### Available sources:
+
+Category | Sources
+---------| --------
+Corporate Registry | `opencorporates`, `companieshouse_internal`, `sayari`
+Screening (Sanction, PEPs, etc) | `acuris_business`, `fincen_special_measures`, `sayari_sanctions`, `austrac_enforcements`, `fca_enforcements`, `icij_leaks`, `marijuana_index`, `csl_entities`, `wikipedia_soes`, `mas_enforcements`, `ofac_sdn_list`, `fcpa_enforcements`, `lei`, `sfc_enforcements`, `fincen_advisories`, `ofac_enforcements`, `acuris_people`, `ofac_people`
+Financial, Banking & Trade Data | `finra`, `bankseu`, `fsr`, `nse`, `swift`, `adv`, `panjiva`
+Adverse Media | `occrp_icij`, 
+Internet Presence | `un_sustainable_banks`, `giin`
+Various | `sentinel_companies`
+
+### *DEPRECATED* Available modes:
 
 - `scan` Provides an essential view of sanctions, PEPs, and adverse news available.
 - `basic` Scan, plus address, jurisdiction, association, and additional risks important in a more in depth review of risk .
@@ -577,11 +608,19 @@ Parameter |  Description | Type | Default
 > The following is an example of the input file required for the bulk request endpoint:
 
 ```json
-{"id":"1", "name": "Yardpoint Sales LLP"}
-{"id":"2", "name": "Sigma Ratings"}
+{"id":"1", "name": "Yardpoint Sales LLP", "dob":"", "countries":[]}
+{"id":"2", "name": "Sigma Ratings", "dob":"", "countries":[]}
 ```
 
-The contents of the request body is a sequence of newline delimited JSON requests.
+The contents of the request body is a sequence of newline delimited JSON requests. The following fields are supported:
+
+Field | Description | Type
+--------- | ----------- | -----
+`id` | Custom external ID | string
+`name` | Name of entity being scored | string
+`dob` | A string representation of a date of birth. Two date formats are accepted: 1) `YYYY-MM-DD` or 2) `YYYY` | string
+`countries` | A list of 2 letter [ISO-2 country code](https://www.iso.org/iso-3166-country-codes.html) to limit matches. Example: `["US","BR","BE","AU"]` | []string |
+
 
 ## Risk Scoring Status
 ```shell
